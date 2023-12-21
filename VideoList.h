@@ -16,10 +16,14 @@ class VideoList : public QMainWindow
 public:
 	VideoList(QWidget* parent = nullptr);
 	~VideoList();
+	
+
 private slots:
 	void addVideoPath();
 	void addVideoPathToListView(const QString& videoPath);
 	void openFileDialog();
+	
+	 void listItemDoubleClicked(const QModelIndex& index);
 
 private:
 	QLineEdit* lineEdit;
@@ -28,6 +32,7 @@ private:
 	QPushButton* PreviousButton;
 	QPushButton* NextButton;
 	QPushButton* browseButton;
+	QString selectedVideoPath;
 	
 	Ui::VideoListClass ui;
 };

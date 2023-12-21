@@ -8,6 +8,7 @@
 #include <QStandardItem>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "VideoPlayerWidget.h"
 
 VideoList::VideoList(QWidget* parent)
 	: QMainWindow(parent), 
@@ -19,14 +20,16 @@ VideoList::VideoList(QWidget* parent)
 	browseButton(new QPushButton)
 {
 	ui.setupUi(this);
+
 	setWindowIcon(QIcon(":/new/prefix1/play.ico"));
+	
 	QVBoxLayout* layout = new QVBoxLayout;
-	QLabel* label = new QLabel("List of videos");
+	QLabel* label = new QLabel("List of videos,Double click to Play The Video");
 	layout->addWidget(label);
 	layout->addWidget(listView);
 	lineEdit->setPlaceholderText("Paste Video path Here");
 	layout->addWidget(lineEdit);
-
+	
 	QHBoxLayout* buttonLayout = new QHBoxLayout; 
 	okButton = new QPushButton("OK");
 	buttonLayout->addWidget(okButton); 
@@ -44,6 +47,8 @@ VideoList::VideoList(QWidget* parent)
 	setCentralWidget(centralWidget);
 	connect(okButton, &QPushButton::clicked, this, &VideoList::addVideoPath);
 	connect(browseButton, &QPushButton::clicked, this, &VideoList::openFileDialog);
+	connect(listView, &QListView::doubleClicked, this, &VideoList::listItemDoubleClicked);
+
 }
 
 VideoList::~VideoList()
@@ -87,4 +92,14 @@ void VideoList::openFileDialog()
 	else {
 		QMessageBox::warning(this, "Try again", "No file Was added");
 	}
+}
+
+
+
+void VideoList::listItemDoubleClicked(const QModelIndex& index)
+{
+	selectedVideoPath = index.data(Qt::DisplayRole).toString();
+	VideoPlayerWidget* V = new VideoPlayerWidget;
+	V->setVideoPath(selectedVideoPath);
+	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }

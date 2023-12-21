@@ -14,6 +14,7 @@
 #include <QSlider>
 #include <QLabel>
 #include <QKeyEvent>
+#include "VideoList.h"
 
 
 
@@ -25,9 +26,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     pauseButton(new QPushButton),
     stopButton(new QPushButton),
     volumeSlider(new QSlider),
-    urlField(new QLineEdit),
     audioOutput(new QAudioOutput),
-    
     confirmButton(new QPushButton),
     expandButton (new QPushButton),
     positionSlider (new QSlider)
@@ -35,15 +34,14 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
 
 {
     this->showNormal();
+    
     setWindowIcon(QIcon(":/new/prefix1/play.ico"));
     
     player = new QMediaPlayer(this);
     videoWidget = new QVideoWidget(this);
     audioOutput = new QAudioOutput(this);
-    
     player->setAudioOutput(audioOutput);
     player->setVideoOutput(videoWidget);
-    
     volumeSlider = new QSlider(Qt::Horizontal, this);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(50);
@@ -56,24 +54,27 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     positionSlider = new QSlider(Qt::Horizontal, this);
     expandButton = new QPushButton("Expand", this);
     expandButton->setFixedSize(60,35);
+    
     urlField = new QLineEdit(this);
-    urlField->setPlaceholderText("Insert Your URL or VideoPath here");
+    urlField->setReadOnly(true);
+    urlField->setPlaceholderText("Video Path Will be Added By the List Here");
     
     volumeSlider->setFixedWidth(70);
-   
+  
 
 
     // Connect slots
     connect(playButton, &QPushButton::clicked, player, &QMediaPlayer::play);
     connect(pauseButton, &QPushButton::clicked, player, &QMediaPlayer::pause);
     connect(stopButton, &QPushButton::clicked, player, &QMediaPlayer::stop);
-    
     connect(confirmButton, &QPushButton::clicked, this, &VideoPlayerWidget::checkFileExtension);
     connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
     connect(positionSlider, &QSlider::sliderMoved, this, &VideoPlayerWidget::setPosition);
     connect(player, &QMediaPlayer::positionChanged, this, &VideoPlayerWidget::updatePosition);
     connect(player, &QMediaPlayer::durationChanged, this, &VideoPlayerWidget::updateDuration);
     connect(expandButton, &QPushButton::clicked, this, &VideoPlayerWidget::makeFullscreen);
+    
+
    
 
     QVBoxLayout* layout = new QVBoxLayout;
@@ -115,7 +116,7 @@ void VideoPlayerWidget::checkFileExtension()
     }
     else
     {
-        QMessageBox::critical(this, tr("Error"), tr("Unacceptable Path, Make Sure That extension given is (*.mp4 *.avi *.mkv) and Try Again !!!"));
+        QMessageBox::critical(this, tr("Error"), tr("Unacceptable Path or No files Passed , Make Sure That extension is correct and Try Again !!!"));
         /*dont change message*/
     }
 }
@@ -146,6 +147,7 @@ void VideoPlayerWidget::makeFullscreen() {
     expandButton->hide();
     urlField->hide();
     confirmButton->hide();
+    QMessageBox::information(nullptr, "Info", "Press Exit Key to Escape Full Screen");
    
     
 }
@@ -165,4 +167,8 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
     else {
         QWidget::keyPressEvent(event);
     }
+}
+ void VideoPlayerWidget::setVideoPath(const QString& videoPath)
+{
+    urlField->setText(videoPath);
 }

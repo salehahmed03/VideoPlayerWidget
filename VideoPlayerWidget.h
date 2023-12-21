@@ -16,8 +16,9 @@ class VideoPlayerWidget : public QWidget
 
 public:
     explicit VideoPlayerWidget(QWidget* parent = nullptr);
-
-
+     void setVideoPath(const QString& videoPath);
+    
+    
 private slots:
     
     void checkFileExtension();
@@ -33,6 +34,7 @@ private slots:
 
     void makeFullscreen();
     void keyPressEvent(QKeyEvent* event);
+    
 
 
 
@@ -47,8 +49,7 @@ private:
     QPushButton* playButton;
     QPushButton* pauseButton;
     QPushButton* stopButton;
-    QLineEdit* urlField;
-    
+    QLineEdit* urlField; 
     QSlider* volumeSlider;
     QPushButton* expandButton;
     QPushButton* confirmButton;
