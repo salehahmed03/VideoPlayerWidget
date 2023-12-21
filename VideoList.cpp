@@ -52,9 +52,16 @@ VideoList::~VideoList()
 
 void VideoList::addVideoPath()
 {
+	
 	QString videoPath = lineEdit->text();
-	addVideoPathToListView(videoPath);
-	lineEdit->clear();
+	if (!videoPath.isEmpty()) {
+		addVideoPathToListView(videoPath);
+		lineEdit->clear();
+	}
+	else {
+		QMessageBox::warning(this, "Try again", "No file Was added");
+	}
+	
 }
 
 void VideoList::addVideoPathToListView(const QString& videoPath)
@@ -76,5 +83,8 @@ void VideoList::openFileDialog()
 	if (!videoPath.isEmpty()) {
 		addVideoPathToListView(videoPath);
 		lineEdit->clear();
+	}
+	else {
+		QMessageBox::warning(this, "Try again", "No file Was added");
 	}
 }
