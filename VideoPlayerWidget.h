@@ -17,6 +17,8 @@ class VideoPlayerWidget : public QWidget
 public:
     explicit VideoPlayerWidget(QWidget* parent = nullptr);
      void setVideoPath(const QString& videoPath);
+
+     
     
     
 private slots:
@@ -35,7 +37,7 @@ private slots:
     void makeFullscreen();
     void keyPressEvent(QKeyEvent* event);
     
-
+    void closeEvent(QCloseEvent* event) override;
 
 
     

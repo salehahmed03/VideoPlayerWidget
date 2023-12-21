@@ -40,8 +40,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     player = new QMediaPlayer(this);
     videoWidget = new QVideoWidget(this);
     audioOutput = new QAudioOutput(this);
-    player->setAudioOutput(audioOutput);
     player->setVideoOutput(videoWidget);
+    player->setAudioOutput(audioOutput);
     volumeSlider = new QSlider(Qt::Horizontal, this);
     volumeSlider->setRange(0, 100);
     volumeSlider->setValue(50);
@@ -172,3 +172,8 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
 {
     urlField->setText(videoPath);
 }
+ void VideoPlayerWidget::closeEvent(QCloseEvent* event)
+ {
+     player->setAudioOutput(nullptr);
+     QWidget::closeEvent(event);
+ }
