@@ -27,7 +27,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     volumeSlider(new QSlider),
     urlField(new QLineEdit),
     audioOutput(new QAudioOutput),
-    browseButton(new QPushButton),
+    
     confirmButton(new QPushButton),
     expandButton (new QPushButton),
     positionSlider (new QSlider)
@@ -58,7 +58,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     expandButton->setFixedSize(60,35);
     urlField = new QLineEdit(this);
     urlField->setPlaceholderText("Insert Your URL or VideoPath here");
-    browseButton = new QPushButton("Browse folders", this);
+    
     volumeSlider->setFixedWidth(70);
    
 
@@ -67,7 +67,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     connect(playButton, &QPushButton::clicked, player, &QMediaPlayer::play);
     connect(pauseButton, &QPushButton::clicked, player, &QMediaPlayer::pause);
     connect(stopButton, &QPushButton::clicked, player, &QMediaPlayer::stop);
-    connect(browseButton, &QPushButton::clicked, this, &VideoPlayerWidget::openFileDialog);
+    
     connect(confirmButton, &QPushButton::clicked, this, &VideoPlayerWidget::checkFileExtension);
     connect(volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
     connect(positionSlider, &QSlider::sliderMoved, this, &VideoPlayerWidget::setPosition);
@@ -83,7 +83,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     
 
     topLayout->addWidget(urlField);
-    topLayout->addWidget(browseButton);
+    
 
     bottomLayout->addWidget(playButton);
     bottomLayout->addWidget(pauseButton);
@@ -101,12 +101,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
 
 
 }
-void VideoPlayerWidget::openFileDialog()
-{
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "/", tr("Video Files (*.mp4 *.avi *.mkv)"));
-    urlField->setText(filePath);
-    //msh 3arf tt8er wla la
-}
+
 
 void VideoPlayerWidget::checkFileExtension()
 {
@@ -151,7 +146,7 @@ void VideoPlayerWidget::makeFullscreen() {
     expandButton->hide();
     urlField->hide();
     confirmButton->hide();
-    browseButton->hide();
+   
     
 }
 void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
@@ -165,7 +160,7 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
         expandButton->show();
         urlField->show();
         confirmButton->show();
-        browseButton->show();
+        
     }
     else {
         QWidget::keyPressEvent(event);

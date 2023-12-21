@@ -18,6 +18,8 @@ public:
 	~VideoList();
 private slots:
 	void addVideoPath();
+	void addVideoPathToListView(const QString& videoPath);
+	void openFileDialog();
 
 private:
 	QLineEdit* lineEdit;
@@ -25,6 +27,7 @@ private:
 	QPushButton* okButton;
 	QPushButton* PreviousButton;
 	QPushButton* NextButton;
-	void addVideoPathToListView(const QString& videoPath);
+	QPushButton* browseButton;
+	
 	Ui::VideoListClass ui;
 };

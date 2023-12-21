@@ -19,7 +19,7 @@ public:
 
 
 private slots:
-    void openFileDialog();
+    
     void checkFileExtension();
     
 
@@ -48,7 +48,7 @@ private:
     QPushButton* pauseButton;
     QPushButton* stopButton;
     QLineEdit* urlField;
-    QPushButton* browseButton;
+    
     QSlider* volumeSlider;
     QPushButton* expandButton;
     QPushButton* confirmButton;
