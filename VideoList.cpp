@@ -53,7 +53,7 @@ VideoList::VideoList(QWidget* parent)
 	connect(okButton, &QPushButton::clicked, this, &VideoList::addVideoPath);
 	connect(browseButton, &QPushButton::clicked, this, &VideoList::openFileDialog);
 	connect(listView, &QListView::doubleClicked, this, &VideoList::listItemDoubleClicked);
-	connect(swapButton, &QPushButton::clicked, this, &VideoList::onSwapClicked);
+	/*connect(swapButton, &QPushButton::clicked, this, &VideoList::onSwapClicked);*/
 	connect(removeButton, &QPushButton::clicked, this, &VideoList::onRemoveClicked);
 
 }

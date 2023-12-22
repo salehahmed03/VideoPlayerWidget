@@ -9,6 +9,8 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QSlider>
+#include <QLabel>
+
 
 class VideoPlayerWidget : public QWidget
 {
@@ -39,6 +41,8 @@ private slots:
     
     void closeEvent(QCloseEvent* event) override;
 
+    void onDurationChanged(qint64 duration);
+
 
     
 
@@ -56,6 +60,7 @@ private:
     QPushButton* expandButton;
     QPushButton* confirmButton;
     QSlider* positionSlider;
+    QLabel* durationLabel;
 
 
     

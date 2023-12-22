@@ -29,7 +29,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     audioOutput(new QAudioOutput),
     confirmButton(new QPushButton),
     expandButton (new QPushButton),
-    positionSlider (new QSlider)
+    positionSlider (new QSlider),
+    durationLabel (new QLabel)
    
 
 {
@@ -60,6 +61,15 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     urlField->setPlaceholderText("Video Path Will be Added By the List Here");
     
     volumeSlider->setFixedWidth(70);
+
+    durationLabel = new QLabel(this);
+    durationLabel->setText("00:00:00");
+    durationLabel->setFixedWidth(70);
+
+   
+    
+    durationLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    durationLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   
 
 
@@ -73,6 +83,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     connect(player, &QMediaPlayer::positionChanged, this, &VideoPlayerWidget::updatePosition);
     connect(player, &QMediaPlayer::durationChanged, this, &VideoPlayerWidget::updateDuration);
     connect(expandButton, &QPushButton::clicked, this, &VideoPlayerWidget::makeFullscreen);
+    connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(onDurationChanged(qint64)));
     
 
    
@@ -96,6 +107,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     layout->addLayout(bottomLayout);
     topLayout->addWidget(confirmButton);
     layout->addWidget(positionSlider);
+    bottomLayout->addWidget(durationLabel);
     
 
     setLayout(layout);
@@ -176,4 +188,18 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
  {
      player->setAudioOutput(nullptr);
      QWidget::closeEvent(event);
+ }
+ QString formatDuration(qint64 duration) {
+     int hours = duration / 3600000;
+     int minutes = (duration % 3600000) / 60000;
+     int seconds = (duration % 60000) / 1000;
+     return QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
+     
+ }
+
+ 
+ void VideoPlayerWidget::onDurationChanged(qint64 duration) {
+     QString durationText = formatDuration(duration);
+     durationLabel->setText(durationText);
+     
  }
