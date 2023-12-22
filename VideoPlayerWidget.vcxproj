@@ -94,7 +94,10 @@
     <QtUic Include="VideoList.ui" />
     <QtUic Include="VideoPlayerWidget.ui" />
     <QtMoc Include="VideoPlayerWidget.h" />
+    <ClCompile Include="Video.cpp" />
+    <ClCompile Include="videoLinkedList.cpp" />
     <ClCompile Include="VideoList.cpp" />
+    <ClCompile Include="VideoPlayer.cpp" />
     <ClCompile Include="VideoPlayerWidget.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -108,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Video.h" />
+    <ClInclude Include="videoLinkedList.h" />
+    <ClInclude Include="VideoPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VideoPlayerWidget.rc" />
