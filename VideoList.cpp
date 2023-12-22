@@ -80,6 +80,7 @@ void VideoList::updateListView()
 		QStandardItem* item = new QStandardItem(QString::fromStdString(videoName));
 		model->appendRow(item);
 	}
+
 }
 
 
@@ -88,7 +89,7 @@ void VideoList::addVideoPath()
 	QString videoPath = lineEdit->text();
 	Video v(videoPath.toStdString());
 
-	if (v.getIsValid()) {
+	if (v.getIsValid() && !videoPath.isEmpty()) {
 		videoPlayer.list.push(v);
 		updateListView();
 		lineEdit->clear();
