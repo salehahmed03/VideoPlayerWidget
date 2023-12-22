@@ -18,7 +18,7 @@ VideoList::VideoList(QWidget* parent)
 	PreviousButton(new QPushButton),
 	okButton(new QPushButton),
 	browseButton(new QPushButton),
-	removeButton(new QPushButton("Remove"))
+	removeButton(new QPushButton)
 {
 
 	ui.setupUi(this);
@@ -41,6 +41,7 @@ VideoList::VideoList(QWidget* parent)
 	buttonLayout->addWidget(PreviousButton);
 	browseButton = new QPushButton("Browse folders", this);
 	buttonLayout->addWidget(browseButton);
+	removeButton = new QPushButton("Remove");
 	buttonLayout->addWidget(removeButton);
 
 	layout->addLayout(buttonLayout);

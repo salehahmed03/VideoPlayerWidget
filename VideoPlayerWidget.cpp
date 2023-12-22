@@ -29,8 +29,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     audioOutput(new QAudioOutput),
     confirmButton(new QPushButton),
     expandButton(new QPushButton),
-    positionSlider(new QSlider)
-
+    positionSlider(new QSlider),
+    durationLabel (new QLabel)
 
 {
     this->showNormal();
@@ -61,6 +61,14 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
 
     volumeSlider->setFixedWidth(70);
 
+    durationLabel = new QLabel(this);
+    durationLabel->setText("00:00:00");
+    durationLabel->setFixedWidth(70);
+
+
+
+    durationLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    durationLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
 
 
@@ -95,6 +103,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     bottomLayout->addWidget(stopButton);
     bottomLayout->addWidget(volumeSlider);
     bottomLayout->addWidget(expandButton);
+    bottomLayout->addWidget(durationLabel);
     layout->addLayout(topLayout);
     layout->addWidget(videoWidget);
     layout->addLayout(bottomLayout);
@@ -178,3 +187,9 @@ QString formatDuration(qint64 duration) {
     return QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
 
 }
+void VideoPlayerWidget::onDurationChanged(qint64 duration) {
+    QString durationText = formatDuration(duration);
+    durationLabel->setText(durationText);
+
+}
+
