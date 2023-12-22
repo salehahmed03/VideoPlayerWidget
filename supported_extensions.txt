@@ -1,0 +1,15 @@
+.avi
+.mp4
+.mkv
+.mov
+.wmv
+.mpg
+.mpeg
+.mpeg-1
+.mpeg-2
+.mpeg-4
+.flv
+.webm
+.avchd
+.3gp
+.3g2

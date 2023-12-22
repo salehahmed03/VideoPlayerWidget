@@ -5,8 +5,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    /*VideoPlayerWidget w;
-    w.show();*/
     VideoList Y;
     Y.show();
     return a.exec();

@@ -209,6 +209,19 @@ int videoLinkedList::searchByName(const string& name) {
     return -1;
 }
 
+ElementType videoLinkedList::searchByIndex(int index) {
+    if (index < 0 || index >= mySize) {
+        cout << "Error Out of bounds\n";
+    }
+
+    NodePointer tempP = first;
+    for (int loc = 0; loc < index; ++loc) {
+        tempP = tempP->next;
+    }
+
+    return tempP->data;
+}
+
 int videoLinkedList::searchByPath(const string& path) {
     int loc;
     videoLinkedList::NodePointer tempP = first;

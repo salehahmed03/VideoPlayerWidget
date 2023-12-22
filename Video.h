@@ -18,12 +18,15 @@ private:
     double fileSize;
     HANDLE fileHandle, fileMapping;
     LPVOID fileAddress;
+    bool isValid;
 
 public:
 
     Video();
 
     Video(const string& filePath);
+
+    bool getIsValid();
 
     void setFilePath(const string& filePath);
 

@@ -29,6 +29,7 @@ void Video::setFilePath(const string& filePath) {
 
     if (isValidExtension) {
         this->filePath = filePath;
+        isValid = true;
         wstring_convert<codecvt_utf8_utf16<wchar_t>> converter;
         this->filePathMap = converter.from_bytes(filePath);
         mapFile();
@@ -130,6 +131,10 @@ void Video::closeFileMapping() {
         CloseHandle(fileHandle);
         fileHandle = nullptr;
     }
+}
+
+bool Video::getIsValid() {
+    return isValid;
 }
 
 #endif

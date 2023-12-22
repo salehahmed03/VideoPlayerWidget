@@ -12,6 +12,8 @@
 
 VideoList::VideoList(QWidget* parent)
 	: QMainWindow(parent), 
+	swapButton(new QPushButton("Swap")),
+	removeButton(new QPushButton("Remove")),
 	lineEdit(new QLineEdit),
 	listView(new QListView),
 	NextButton(new QPushButton),
@@ -19,6 +21,7 @@ VideoList::VideoList(QWidget* parent)
 	okButton(new QPushButton),
 	browseButton(new QPushButton)
 {
+
 	ui.setupUi(this);
 
 	setWindowIcon(QIcon(":/new/prefix1/play.ico"));
@@ -41,6 +44,8 @@ VideoList::VideoList(QWidget* parent)
 	buttonLayout->addWidget(browseButton);
 
 	layout->addLayout(buttonLayout);
+	buttonLayout->addWidget(swapButton);
+	buttonLayout->addWidget(removeButton);
 
 	QWidget* centralWidget = new QWidget;
 	centralWidget->setLayout(layout);
@@ -48,6 +53,8 @@ VideoList::VideoList(QWidget* parent)
 	connect(okButton, &QPushButton::clicked, this, &VideoList::addVideoPath);
 	connect(browseButton, &QPushButton::clicked, this, &VideoList::openFileDialog);
 	connect(listView, &QListView::doubleClicked, this, &VideoList::listItemDoubleClicked);
+	connect(swapButton, &QPushButton::clicked, this, &VideoList::onSwapClicked);
+	connect(removeButton, &QPushButton::clicked, this, &VideoList::onRemoveClicked);
 
 }
 
@@ -57,9 +64,11 @@ VideoList::~VideoList()
 
 void VideoList::addVideoPath()
 {
-	
 	QString videoPath = lineEdit->text();
-	if (!videoPath.isEmpty()) {
+	Video v(videoPath.toStdString());
+
+	if (v.getIsValid()) {
+		videoPlayer.list.push(v);
 		addVideoPathToListView(videoPath);
 		lineEdit->clear();
 	}
@@ -99,7 +108,10 @@ void VideoList::openFileDialog()
 void VideoList::listItemDoubleClicked(const QModelIndex& index)
 {
 	selectedVideoPath = index.data(Qt::DisplayRole).toString();
-	VideoPlayerWidget* V = new VideoPlayerWidget;
 	V->setVideoPath(selectedVideoPath);
 	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
+}
+
+void VideoList::onRemoveClicked() {
+	
 }

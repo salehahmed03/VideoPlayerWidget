@@ -43,6 +43,7 @@ public:
     void pop();
     int searchByName(const string& name);
     int searchByPath(const string& path);
+    ElementType searchByIndex(int index);
     void display(ostream& out) const;
     int nodeCount();
     void swap(const string& name1, const string& name2);
