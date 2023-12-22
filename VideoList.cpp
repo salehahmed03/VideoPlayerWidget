@@ -94,7 +94,7 @@ void VideoList::addVideoPath()
 		lineEdit->clear();
 	}
 	else {
-		QMessageBox::warning(this, "Try again", "No file Was added");
+		QMessageBox::warning(this, "Try again", "No file Was added OR path is wrong");
 	}
 
 }
@@ -125,6 +125,9 @@ void VideoList::listItemDoubleClicked(const QModelIndex& index)
 
 void VideoList::onNextClicked()
 {
+	if (videoPlayer.currentVideo == nullptr) {
+		return;
+	}
 	videoPlayer.next();
 	string s = videoPlayer.currentVideo->data.getFilePath();
 	QString qString = QString::fromStdString(s);
@@ -134,6 +137,9 @@ void VideoList::onNextClicked()
 
 void VideoList::onPreviousClicked()
 {
+	if (videoPlayer.currentVideo == nullptr) {
+		return;
+	}
 	videoPlayer.previous();
 	string s = videoPlayer.currentVideo->data.getFilePath();
 	QString qString = QString::fromStdString(s);
