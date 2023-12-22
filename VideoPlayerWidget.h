@@ -9,8 +9,6 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QSlider>
-#include <QLabel>
-
 
 class VideoPlayerWidget : public QWidget
 {
@@ -18,15 +16,15 @@ class VideoPlayerWidget : public QWidget
 
 public:
     explicit VideoPlayerWidget(QWidget* parent = nullptr);
-     void setVideoPath(const QString& videoPath);
+    void setVideoPath(const QString& videoPath);
 
-     
-    
-    
+
+
+
 private slots:
-    
+
     void checkFileExtension();
-    
+
 
     void setPosition(int position);
 
@@ -38,32 +36,29 @@ private slots:
 
     void makeFullscreen();
     void keyPressEvent(QKeyEvent* event);
-    
+
     void closeEvent(QCloseEvent* event) override;
 
-    void onDurationChanged(qint64 duration);
 
 
-    
 
 
 private:
-    
+
     QMediaPlayer* player;
     QAudioOutput* audioOutput;
     QVideoWidget* videoWidget;
     QPushButton* playButton;
     QPushButton* pauseButton;
     QPushButton* stopButton;
-    QLineEdit* urlField; 
+    QLineEdit* urlField;
     QSlider* volumeSlider;
     QPushButton* expandButton;
     QPushButton* confirmButton;
     QSlider* positionSlider;
-    QLabel* durationLabel;
 
 
-    
+
 };
 
 

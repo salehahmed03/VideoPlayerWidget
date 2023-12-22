@@ -209,7 +209,7 @@ int videoLinkedList::searchByName(const string& name) {
     return -1;
 }
 
-ElementType videoLinkedList::searchByIndex(int index) {
+string videoLinkedList::searchByIndex(int index) {
     if (index < 0 || index >= mySize) {
         cout << "Error Out of bounds\n";
     }
@@ -219,7 +219,7 @@ ElementType videoLinkedList::searchByIndex(int index) {
         tempP = tempP->next;
     }
 
-    return tempP->data;
+    return tempP->data.getFilePath();
 }
 
 int videoLinkedList::searchByPath(const string& path) {

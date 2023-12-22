@@ -28,16 +28,15 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     volumeSlider(new QSlider),
     audioOutput(new QAudioOutput),
     confirmButton(new QPushButton),
-    expandButton (new QPushButton),
-    positionSlider (new QSlider),
-    durationLabel (new QLabel)
-   
+    expandButton(new QPushButton),
+    positionSlider(new QSlider)
+
 
 {
     this->showNormal();
-    
+
     setWindowIcon(QIcon(":/new/prefix1/play.ico"));
-    
+
     player = new QMediaPlayer(this);
     videoWidget = new QVideoWidget(this);
     audioOutput = new QAudioOutput(this);
@@ -54,23 +53,17 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     stopButton->setStyleSheet("background-color: red; color: white;");
     positionSlider = new QSlider(Qt::Horizontal, this);
     expandButton = new QPushButton("Expand", this);
-    expandButton->setFixedSize(60,35);
-    
+    expandButton->setFixedSize(60, 35);
+
     urlField = new QLineEdit(this);
     urlField->setReadOnly(true);
     urlField->setPlaceholderText("Video Path Will be Added By the List Here");
-    
+
     volumeSlider->setFixedWidth(70);
 
-    durationLabel = new QLabel(this);
-    durationLabel->setText("00:00:00");
-    durationLabel->setFixedWidth(70);
 
-   
-    
-    durationLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    durationLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  
+
+
 
 
     // Connect slots
@@ -84,18 +77,18 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     connect(player, &QMediaPlayer::durationChanged, this, &VideoPlayerWidget::updateDuration);
     connect(expandButton, &QPushButton::clicked, this, &VideoPlayerWidget::makeFullscreen);
     connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(onDurationChanged(qint64)));
-    
 
-   
+
+
 
     QVBoxLayout* layout = new QVBoxLayout;
     QHBoxLayout* topLayout = new QHBoxLayout;
     QHBoxLayout* bottomLayout = new QHBoxLayout;
-    
-    
+
+
 
     topLayout->addWidget(urlField);
-    
+
 
     bottomLayout->addWidget(playButton);
     bottomLayout->addWidget(pauseButton);
@@ -107,8 +100,7 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     layout->addLayout(bottomLayout);
     topLayout->addWidget(confirmButton);
     layout->addWidget(positionSlider);
-    bottomLayout->addWidget(durationLabel);
-    
+
 
     setLayout(layout);
 
@@ -119,18 +111,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
 void VideoPlayerWidget::checkFileExtension()
 {
     QString filePath = urlField->text();
-    if (filePath.endsWith(".mp4") || filePath.endsWith(".avi") || filePath.endsWith(".mkv"))
-    {
-        
-        player->setSource(QUrl::fromLocalFile(filePath));
-        player->play(); 
-        //to be replaced by our orginal checking code ....
-    }
-    else
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Unacceptable Path or No files Passed , Make Sure That extension is correct and Try Again !!!"));
-        /*dont change message*/
-    }
+    player->setSource(QUrl::fromLocalFile(filePath));
+    player->play();
 }
 
 
@@ -160,8 +142,8 @@ void VideoPlayerWidget::makeFullscreen() {
     urlField->hide();
     confirmButton->hide();
     QMessageBox::information(nullptr, "Info", "Press Exit Key to Escape Full Screen");
-   
-    
+
+
 }
 void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Escape && this->isFullScreen()) {
@@ -174,32 +156,25 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
         expandButton->show();
         urlField->show();
         confirmButton->show();
-        
+
     }
     else {
         QWidget::keyPressEvent(event);
     }
 }
- void VideoPlayerWidget::setVideoPath(const QString& videoPath)
+void VideoPlayerWidget::setVideoPath(const QString& videoPath)
 {
     urlField->setText(videoPath);
 }
- void VideoPlayerWidget::closeEvent(QCloseEvent* event)
- {
-     player->setAudioOutput(nullptr);
-     QWidget::closeEvent(event);
- }
- QString formatDuration(qint64 duration) {
-     int hours = duration / 3600000;
-     int minutes = (duration % 3600000) / 60000;
-     int seconds = (duration % 60000) / 1000;
-     return QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
-     
- }
+void VideoPlayerWidget::closeEvent(QCloseEvent* event)
+{
+    player->setAudioOutput(nullptr);
+    QWidget::closeEvent(event);
+}
+QString formatDuration(qint64 duration) {
+    int hours = duration / 3600000;
+    int minutes = (duration % 3600000) / 60000;
+    int seconds = (duration % 60000) / 1000;
+    return QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
 
- 
- void VideoPlayerWidget::onDurationChanged(qint64 duration) {
-     QString durationText = formatDuration(duration);
-     durationLabel->setText(durationText);
-     
- }
+}

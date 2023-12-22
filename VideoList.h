@@ -19,18 +19,20 @@ public:
 	VideoPlayer videoPlayer;
 	VideoList(QWidget* parent = nullptr);
 	~VideoList();
-	
+
+
 
 private slots:
 	void addVideoPath();
-	void addVideoPathToListView(const QString& videoPath);
+	void updateListView();
 	void openFileDialog();
-	 void listItemDoubleClicked(const QModelIndex& index);
-	 void onRemoveClicked();
+	void listItemDoubleClicked(const QModelIndex& index);
+	void onNextClicked();
+	void onPreviousClicked();
+	void onItemClickedForRemove(const QModelIndex& index);
+	void onRemoveClicked();
 
 private:
-	QString selectedVideoPath1;
-	QString selectedVideoPath2;
 	QLineEdit* lineEdit;
 	QListView* listView;
 	QPushButton* okButton;
@@ -38,8 +40,8 @@ private:
 	QPushButton* NextButton;
 	QPushButton* browseButton;
 	QString selectedVideoPath;
-	QPushButton* swapButton;
+	QString selectedVideoPathRemove;
 	QPushButton* removeButton;
-	
+
 	Ui::VideoListClass ui;
 };

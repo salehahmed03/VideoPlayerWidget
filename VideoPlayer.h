@@ -8,10 +8,13 @@
 #include <string>
 using namespace std;
 
+class VideoList;
+
 class VideoPlayer {
 private:
     videoLinkedList::NodePointer currentVideo;
     bool isPlaying;
+    friend class VideoList;
 
 public:
     videoLinkedList list;
