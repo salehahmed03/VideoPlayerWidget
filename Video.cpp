@@ -8,6 +8,11 @@ Video::Video(const string& filePath) {
 }
 
 void Video::setFilePath(const string& filePath) {
+    if (filePath.find('.') == string::npos) {
+        isValid = false;
+        return;
+    }
+
     ifstream supportedExtensionsFile("supported_extensions.txt");
     if (!supportedExtensionsFile.is_open()) {
         cout << "Error opening supported_extensions.txt" << endl;

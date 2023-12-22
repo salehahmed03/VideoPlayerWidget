@@ -18,7 +18,7 @@ private:
     double fileSize;
     HANDLE fileHandle, fileMapping;
     LPVOID fileAddress;
-    bool isValid;
+    bool isValid = false;
 
 public:
 

@@ -138,39 +138,45 @@ void videoLinkedList::push(ElementType& dataVal) {
 }
 
 void videoLinkedList::erase(int index) {
-    if (index < 0 || index >= mySize)
-    {
+    if (index < 0 || index >= mySize) {
         cerr << "Illegal location to delete -- " << index << endl;
         return;
     }
-    if (empty())
-    {
+    if (empty()) {
         cerr << "Cannot delete from an empty list." << endl;
         return;
     }
-    mySize--;
-    videoLinkedList::NodePointer ptr = first,
-        predPtr = ptr->prev,
-        nextPtr = ptr->next;
-    if (index == 0)
-    {
-        ptr = first;
-        first = ptr->next;
-        last->next = first;
-        first->prev = last;
-        delete ptr;
+
+    NodePointer ptr = first;
+    if (index == 0) { 
+        first = first->next;
+        if (mySize == 1) {
+            last = nullptr;
+        }
+        else {
+            last->next = first;
+            first->prev = last;
+        }
     }
     else {
-        for (int i = 1; i < index; i++) {
+        for (int i = 0; i < index; i++) {
             ptr = ptr->next;
-            predPtr = predPtr->next;
-            nextPtr = nextPtr->next;
         }
-        predPtr->next = nextPtr;
-        nextPtr->prev = predPtr;
-        delete ptr;
+        ptr->prev->next = ptr->next;
+        ptr->next->prev = ptr->prev;
+        if (index == mySize - 1) { 
+            last = ptr->prev;
+        }
+    }
+
+    delete ptr;
+    mySize--;
+
+    if (mySize == 0) {
+        first = last = nullptr;
     }
 }
+
 
 void videoLinkedList::pop() {
     if (empty()) {
@@ -245,14 +251,17 @@ void videoLinkedList::display(ostream& out) const {
 
 
 int videoLinkedList::nodeCount() {
-    int count = 0;
-    videoLinkedList::NodePointer ptr = first;
-    while (ptr != last)
-    {
+    if (first == nullptr)
+        return 0;
+
+    int count = 1;
+    videoLinkedList::NodePointer ptr = first->next;
+
+    while (ptr != first) {
         count++;
         ptr = ptr->next;
     }
-    count++;
+
     return count;
 }
 

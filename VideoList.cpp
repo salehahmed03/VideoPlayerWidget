@@ -80,7 +80,6 @@ void VideoList::updateListView()
 		QStandardItem* item = new QStandardItem(QString::fromStdString(videoName));
 		model->appendRow(item);
 	}
-
 }
 
 
@@ -104,7 +103,7 @@ void VideoList::openFileDialog()
 {
 	QString videoPath = QFileDialog::getOpenFileName(this, tr("Open Video"), "", tr("All Files (*)"));
 	Video v(videoPath.toStdString());
-	if (v.getIsValid()) {
+	if (v.getIsValid() && !videoPath.isEmpty()) {
 		videoPlayer.list.push(v);
 		updateListView();
 		lineEdit->clear();
@@ -147,10 +146,18 @@ void VideoList::onItemClickedForRemove(const QModelIndex& index)
 	selectedVideoPathRemove = index.data(Qt::DisplayRole).toString();
 }
 
-void VideoList::onRemoveClicked()
-{
+void VideoList::onRemoveClicked() {
+	if (selectedVideoPathRemove.isEmpty()) {
+		QMessageBox::warning(this, "Warning", "No video selected for removal");
+		return;
+	}
 	string s = selectedVideoPathRemove.toStdString();
 	int i = videoPlayer.list.searchByPath(s);
-	videoPlayer.list.erase(i);
-	updateListView();
+	if (i != -1) {
+		videoPlayer.list.erase(i);
+		updateListView();
+	}
+	else {
+		return;
+	}
 }
