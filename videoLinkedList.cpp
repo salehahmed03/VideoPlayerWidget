@@ -265,9 +265,9 @@ int videoLinkedList::nodeCount() {
     return count;
 }
 
-void videoLinkedList::swap(const string& name1, const string& name2) {
-    int indexFirst = searchByName(name1);
-    int indexSecond = searchByName(name2);
+void videoLinkedList::swap(const string& path1, const string& path2) {
+    int indexFirst = searchByPath(path1);
+    int indexSecond = searchByPath(path2);
 
     if (indexFirst == -1 || indexSecond == -1) {
         cout << "One or both elements not found in the list. Cannot swap." << endl;

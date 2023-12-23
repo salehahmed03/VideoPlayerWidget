@@ -31,6 +31,8 @@ private slots:
 	void onPreviousClicked();
 	void onItemClickedForRemove(const QModelIndex& index);
 	void onRemoveClicked();
+	void onItemClickedForSwap(const QModelIndex& index);
+	void onSwapClicked();
 
 private:
 	QLineEdit* lineEdit;
@@ -41,7 +43,10 @@ private:
 	QPushButton* browseButton;
 	QString selectedVideoPath;
 	QString selectedVideoPathRemove;
+	QString selectedVideoPathSwap1;
+	QString selectedVideoPathSwap2;
 	QPushButton* removeButton;
+	QPushButton* swapButton;
 
 	Ui::VideoListClass ui;
 };

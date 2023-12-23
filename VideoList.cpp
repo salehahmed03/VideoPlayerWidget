@@ -18,7 +18,8 @@ VideoList::VideoList(QWidget* parent)
 	PreviousButton(new QPushButton),
 	okButton(new QPushButton),
 	browseButton(new QPushButton),
-	removeButton(new QPushButton)
+	removeButton(new QPushButton),
+	swapButton(new QPushButton)
 {
 
 	ui.setupUi(this);
@@ -43,6 +44,8 @@ VideoList::VideoList(QWidget* parent)
 	buttonLayout->addWidget(browseButton);
 	removeButton = new QPushButton("Remove");
 	buttonLayout->addWidget(removeButton);
+	swapButton = new QPushButton("Swap");
+	buttonLayout->addWidget(swapButton);
 
 	layout->addLayout(buttonLayout);
 	buttonLayout->addWidget(removeButton);
@@ -57,6 +60,8 @@ VideoList::VideoList(QWidget* parent)
 	connect(PreviousButton, &QPushButton::clicked, this, &VideoList::onPreviousClicked);
 	connect(listView, &QListView::clicked, this, &VideoList::onItemClickedForRemove);
 	connect(removeButton, &QPushButton::clicked, this, &VideoList::onRemoveClicked);
+	connect(swapButton, &QPushButton::clicked, this, &VideoList::onSwapClicked);
+	connect(listView, &QListView::clicked, this, &VideoList::onItemClickedForSwap);
 }
 
 VideoList::~VideoList()
@@ -164,6 +169,30 @@ void VideoList::onRemoveClicked() {
 		updateListView();
 	}
 	else {
+		return;
+	}
+}
+
+void VideoList::onItemClickedForSwap(const QModelIndex& index)
+{
+	if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+		selectedVideoPathSwap2 = index.data(Qt::DisplayRole).toString();
+	}
+	else {
+		selectedVideoPathSwap1 = index.data(Qt::DisplayRole).toString();
+		selectedVideoPathSwap2.clear();
+	}
+}
+
+void VideoList::onSwapClicked() {
+	if (!selectedVideoPathSwap1.isEmpty() && !selectedVideoPathSwap2.isEmpty()) {
+		string s1 = selectedVideoPathSwap1.toStdString();
+		string s2 = selectedVideoPathSwap2.toStdString();
+		videoPlayer.list.swap(s1, s2);
+		updateListView();
+	}
+	else {
+		QMessageBox::warning(this, "Warning", "Choose Two Videos inorder to swap");
 		return;
 	}
 }

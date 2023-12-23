@@ -46,7 +46,7 @@ public:
     string searchByIndex(int index);
     void display(ostream& out) const;
     int nodeCount();
-    void swap(const string& name1, const string& name2);
+    void swap(const string& path1, const string& path2);
 };
 
 ostream& operator<<(ostream& out, const videoLinkedList& aList);

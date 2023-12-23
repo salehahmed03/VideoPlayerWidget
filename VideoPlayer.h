@@ -26,7 +26,6 @@ public:
     void resume();
     void next();
     void previous();
-    void swap(const string& name1, const string& name2);
 };
 
 #endif

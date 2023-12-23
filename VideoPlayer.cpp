@@ -80,8 +80,4 @@ void VideoPlayer::previous() {
     isPlaying = true;
 }
 
-void VideoPlayer::swap(const string& name1, const string& name2) {
-    list.swap(name1, name2);
-}
-
 #endif
