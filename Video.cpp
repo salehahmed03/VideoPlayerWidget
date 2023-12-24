@@ -8,6 +8,13 @@ Video::Video(const string& filePath) {
 }
 
 void Video::setFilePath(const string& filePath) {
+
+    if (!filesystem::exists(filePath)) {
+        cout << "File does not exist: " << filePath << endl;
+        isValid = false;
+        return;
+    }
+
     if (filePath.find('.') == string::npos) {
         isValid = false;
         return;

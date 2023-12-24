@@ -99,7 +99,7 @@ void VideoList::addVideoPath()
 		lineEdit->clear();
 	}
 	else {
-		QMessageBox::warning(this, "Try again", "No file Was added OR path is wrong");
+		QMessageBox::warning(this, "Try again", "Path is wrong, No file Was added");
 	}
 
 }
