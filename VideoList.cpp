@@ -8,7 +8,10 @@
 #include <QStandardItem>
 #include <QFileDialog>
 #include <QMessageBox>
+#include<QHash>
+#include <QMediaMetaData>
 #include "VideoPlayerWidget.h"
+#include <QTextEdit>
 
 VideoList::VideoList(QWidget* parent)
 	: QMainWindow(parent),
@@ -20,6 +23,7 @@ VideoList::VideoList(QWidget* parent)
 	browseButton(new QPushButton),
 	removeButton(new QPushButton),
 	swapButton(new QPushButton)
+	
 {
 
 	ui.setupUi(this);
@@ -46,6 +50,7 @@ VideoList::VideoList(QWidget* parent)
 	buttonLayout->addWidget(removeButton);
 	swapButton = new QPushButton("Swap");
 	buttonLayout->addWidget(swapButton);
+	
 
 	layout->addLayout(buttonLayout);
 	buttonLayout->addWidget(removeButton);
@@ -62,6 +67,7 @@ VideoList::VideoList(QWidget* parent)
 	connect(removeButton, &QPushButton::clicked, this, &VideoList::onRemoveClicked);
 	connect(swapButton, &QPushButton::clicked, this, &VideoList::onSwapClicked);
 	connect(listView, &QListView::clicked, this, &VideoList::onItemClickedForSwap);
+	
 }
 
 VideoList::~VideoList()

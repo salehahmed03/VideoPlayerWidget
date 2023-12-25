@@ -14,6 +14,8 @@
 #include <QSlider>
 #include <QLabel>
 #include <QKeyEvent>
+#include <QMediaMetaData>
+
 #include "VideoList.h"
 
 
@@ -30,7 +32,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     confirmButton(new QPushButton),
     expandButton(new QPushButton),
     positionSlider(new QSlider),
-    durationLabel (new QLabel)
+    durationLabel (new QLabel),
+    seeDetails(new QPushButton)
 
 {
     this->showNormal();
@@ -70,6 +73,10 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     durationLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     durationLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
+    seeDetails = new QPushButton("See More Details About The Video");
+    seeDetails-> setFixedSize(200, 20);
+    seeDetails->setStyleSheet("background-color: lightblue; color: black;");
+
 
 
 
@@ -85,7 +92,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     connect(player, &QMediaPlayer::durationChanged, this, &VideoPlayerWidget::updateDuration);
     connect(expandButton, &QPushButton::clicked, this, &VideoPlayerWidget::makeFullscreen);
     connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(onDurationChanged(qint64)));
-
+    connect(seeDetails, &QPushButton::clicked, this, &VideoPlayerWidget::showVideoInfo);
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, &VideoPlayerWidget::onMediaStatusChanged);
 
 
 
@@ -108,7 +116,9 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     layout->addWidget(videoWidget);
     layout->addLayout(bottomLayout);
     topLayout->addWidget(confirmButton);
+
     layout->addWidget(positionSlider);
+    layout->addWidget(seeDetails);
 
 
     setLayout(layout);
@@ -150,6 +160,7 @@ void VideoPlayerWidget::makeFullscreen() {
     expandButton->hide();
     urlField->hide();
     confirmButton->hide();
+    seeDetails->hide();
     QMessageBox::information(nullptr, "Info", "Press Exit Key to Escape Full Screen");
 
 
@@ -165,6 +176,7 @@ void VideoPlayerWidget::keyPressEvent(QKeyEvent* event) {
         expandButton->show();
         urlField->show();
         confirmButton->show();
+        seeDetails->show();
 
     }
     else {
@@ -193,3 +205,33 @@ void VideoPlayerWidget::onDurationChanged(qint64 duration) {
 
 }
 
+void VideoPlayerWidget::showVideoInfo()
+{
+    
+    QMessageBox msgBox(this);
+    
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    msgBox.setText("See details");
+    msgBox.setDetailedText(videoInfo);
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();
+}
+
+void VideoPlayerWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
+{
+    if (status == QMediaPlayer::LoadedMedia) {
+        QMediaMetaData metadata = player->metaData();
+        QString videoCodec = metadata.stringValue(QMediaMetaData::VideoCodec);
+        QString Format = metadata.stringValue(QMediaMetaData::FileFormat);
+        QString videoBitRate = metadata.stringValue(QMediaMetaData::VideoBitRate);
+        QString videoFrameRate = metadata.stringValue(QMediaMetaData::VideoFrameRate);
+        QString resolution = metadata.stringValue(QMediaMetaData::Resolution);
+
+        videoInfo.append("videoCodec:"+videoCodec  +"\n");
+        videoInfo.append("VideoFormat" + Format + "\n");
+        videoInfo.append("VideoBitRate:"+ videoBitRate + ": " + "\n");
+        videoInfo.append("videoFrameRate: "+ videoFrameRate  + "\n");
+        videoInfo.append("resolution:"+resolution +"\n");
+    }
+}

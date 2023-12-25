@@ -6,6 +6,8 @@
 #include <QListView>
 #include <QLineEdit>
 #include <QPushButton>
+#include<QHash>
+#include <QMediaMetaData>
 #include <ui_VideoList.h>
 #include "VideoPlayer.h"
 #include "VideoPlayerWidget.h"
@@ -33,6 +35,8 @@ private slots:
 	void onRemoveClicked();
 	void onItemClickedForSwap(const QModelIndex& index);
 	void onSwapClicked();
+	
+
 
 private:
 	QLineEdit* lineEdit;
@@ -47,6 +51,7 @@ private:
 	QString selectedVideoPathSwap2;
 	QPushButton* removeButton;
 	QPushButton* swapButton;
+	
 
 	Ui::VideoListClass ui;
 };

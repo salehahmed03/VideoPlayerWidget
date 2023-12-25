@@ -18,6 +18,7 @@ class VideoPlayerWidget : public QWidget
 public:
     explicit VideoPlayerWidget(QWidget* parent = nullptr);
     void setVideoPath(const QString& videoPath);
+    
 
 
 
@@ -42,13 +43,21 @@ private slots:
 
     void onDurationChanged(qint64 duration);
 
+    void showVideoInfo();
+
+    void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
+
+    /*void updateVideoInfo();*/
+
+    
+
 
 
 
 
 private:
 
-    QMediaPlayer* player;
+    
     QAudioOutput* audioOutput;
     QVideoWidget* videoWidget;
     QPushButton* playButton;
@@ -60,6 +69,9 @@ private:
     QPushButton* confirmButton;
     QSlider* positionSlider;
     QLabel* durationLabel;
+    QMediaPlayer* player;
+    QPushButton* seeDetails;
+    QString videoInfo;
 
 
 
