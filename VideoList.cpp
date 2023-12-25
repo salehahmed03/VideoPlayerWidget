@@ -126,12 +126,16 @@ void VideoList::openFileDialog()
 
 void VideoList::listItemDoubleClicked(const QModelIndex& index)
 {
-	selectedVideoPath = index.data(Qt::DisplayRole).toString();
-	videoPlayer.setCurrentVideoByPath(selectedVideoPath.toStdString());
-	string s = videoPlayer.currentVideo->data.getFilePath();
-	QString qString = QString::fromStdString(s);
-	V->setVideoPath(qString);
-	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
+	if (!V->isVisible()) {
+		VideoPlayerWidget* V = new VideoPlayerWidget;
+		
+	}
+		selectedVideoPath = index.data(Qt::DisplayRole).toString();
+		videoPlayer.setCurrentVideoByPath(selectedVideoPath.toStdString());
+		string s = videoPlayer.currentVideo->data.getFilePath();
+		QString qString = QString::fromStdString(s);
+		V->setVideoPath(qString);
+		QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }
 
 void VideoList::onNextClicked()

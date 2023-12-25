@@ -47,7 +47,7 @@ private slots:
 
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
-    /*void updateVideoInfo();*/
+    
 
     
 
