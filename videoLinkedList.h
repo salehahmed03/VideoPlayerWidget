@@ -9,6 +9,8 @@ using namespace std;
 typedef Video ElementType;
 
 class VideoPlayer;
+class VideoList;
+class AddressList;
 
 class videoLinkedList
 {
@@ -30,6 +32,8 @@ private:
     NodePointer last;
 
     friend class VideoPlayer;
+    friend class VideoList;
+    friend class AddressList;
 
 public:
     videoLinkedList();
@@ -47,6 +51,7 @@ public:
     void display(ostream& out) const;
     int nodeCount();
     void swap(const string& path1, const string& path2);
+    NodePointer getElementPtrByIndex(int index);
 };
 
 ostream& operator<<(ostream& out, const videoLinkedList& aList);

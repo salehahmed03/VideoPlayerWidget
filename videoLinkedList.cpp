@@ -295,4 +295,17 @@ ostream& operator<<(ostream& out, const videoLinkedList& aList) {
     return out;
 }
 
+videoLinkedList::NodePointer videoLinkedList::getElementPtrByIndex(int index) {
+    if (index < 0 || index >= mySize) {
+        cerr << "Index out of range." << endl;
+        return nullptr;
+    }
+
+    NodePointer current = first;
+    for (int i = 0; i < index; ++i) {
+        current = current->next;
+    }
+    return current;
+}
+
 #endif

@@ -11,6 +11,7 @@
 #include <ui_VideoList.h>
 #include "VideoPlayer.h"
 #include "VideoPlayerWidget.h"
+#include "AddressList.h"
 
 class VideoList : public QMainWindow
 {
@@ -18,6 +19,7 @@ class VideoList : public QMainWindow
 
 public:
 	VideoPlayerWidget* V = new VideoPlayerWidget;
+	AddressList* l = new AddressList;
 	VideoPlayer videoPlayer;
 	VideoList(QWidget* parent = nullptr);
 	~VideoList();

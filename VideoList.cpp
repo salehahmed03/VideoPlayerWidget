@@ -28,6 +28,7 @@ VideoList::VideoList(QWidget* parent)
 
 	ui.setupUi(this);
 
+
 	setWindowIcon(QIcon(":/new/prefix1/play.ico"));
 
 	QVBoxLayout* layout = new QVBoxLayout;
@@ -91,6 +92,7 @@ void VideoList::updateListView()
 		QStandardItem* item = new QStandardItem(QString::fromStdString(videoName));
 		model->appendRow(item);
 	}
+	l->updateAddressListView(videoPlayer);
 }
 
 
@@ -175,6 +177,8 @@ void VideoList::onRemoveClicked() {
 	string s = selectedVideoPathRemove.toStdString();
 	int i = videoPlayer.list.searchByPath(s);
 	if (i != -1) {
+		videoLinkedList::NodePointer ptr = videoPlayer.list.getElementPtrByIndex(i);
+		ptr->data.closeFileMapping();
 		videoPlayer.list.erase(i);
 		updateListView();
 	}
