@@ -120,7 +120,7 @@ void VideoList::openFileDialog()
 		lineEdit->clear();
 	}
 	else {
-		QMessageBox::warning(this, "Try again", "No file Was added");
+		QMessageBox::warning(this, "Try again", "No file Was added , Or Wrong File Path");
 	}
 }
 
@@ -128,14 +128,14 @@ void VideoList::listItemDoubleClicked(const QModelIndex& index)
 {
 	if (!V->isVisible()) {
 		VideoPlayerWidget* V = new VideoPlayerWidget;
-		
+
 	}
-		selectedVideoPath = index.data(Qt::DisplayRole).toString();
-		videoPlayer.setCurrentVideoByPath(selectedVideoPath.toStdString());
-		string s = videoPlayer.currentVideo->data.getFilePath();
-		QString qString = QString::fromStdString(s);
-		V->setVideoPath(qString);
-		QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
+	selectedVideoPath = index.data(Qt::DisplayRole).toString();
+	videoPlayer.setCurrentVideoByPath(selectedVideoPath.toStdString());
+	string s = videoPlayer.currentVideo->data.getFilePath();
+	QString qString = QString::fromStdString(s);
+	V->setVideoPath(qString);
+	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }
 
 void VideoList::onNextClicked()
