@@ -47,6 +47,10 @@ private slots:
 
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
+    void skipForward();
+
+    void skipBackward();
+
     
 
     
@@ -67,6 +71,8 @@ private:
     QSlider* volumeSlider;
     QPushButton* expandButton;
     QPushButton* confirmButton;
+    QPushButton* skipForwardButton;
+    QPushButton* skipBackwardButton;
     QSlider* positionSlider;
     QLabel* durationLabel;
     QMediaPlayer* player;

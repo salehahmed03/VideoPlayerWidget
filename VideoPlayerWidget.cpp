@@ -33,7 +33,9 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     expandButton(new QPushButton),
     positionSlider(new QSlider),
     durationLabel (new QLabel),
-    seeDetails(new QPushButton)
+    seeDetails(new QPushButton),
+    skipForwardButton (new QPushButton),
+    skipBackwardButton (new QPushButton)
 
 {
     this->showNormal();
@@ -56,6 +58,10 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     stopButton->setStyleSheet("background-color: red; color: white;");
     positionSlider = new QSlider(Qt::Horizontal, this);
     expandButton = new QPushButton("Expand", this);
+    expandButton->setFixedSize(60, 35);
+    skipForwardButton = new QPushButton("skip forward 5s", this);
+    skipBackwardButton = new QPushButton("skip backward 5s", this);
+    expandButton->setFixedSize(60, 35);
     expandButton->setFixedSize(60, 35);
 
     urlField = new QLineEdit(this);
@@ -94,6 +100,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     connect(player, SIGNAL(durationChanged(qint64)), this, SLOT(onDurationChanged(qint64)));
     connect(seeDetails, &QPushButton::clicked, this, &VideoPlayerWidget::showVideoInfo);
     connect(player, &QMediaPlayer::mediaStatusChanged, this, &VideoPlayerWidget::onMediaStatusChanged);
+    connect(skipForwardButton, &QPushButton::clicked, this, &VideoPlayerWidget::skipForward);
+    connect(skipBackwardButton, &QPushButton::clicked, this, &VideoPlayerWidget::skipBackward);
 
 
 
@@ -112,6 +120,8 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
     bottomLayout->addWidget(volumeSlider);
     bottomLayout->addWidget(expandButton);
     bottomLayout->addWidget(durationLabel);
+    bottomLayout->addWidget(skipBackwardButton);
+    bottomLayout->addWidget(skipForwardButton);
     layout->addLayout(topLayout);
     layout->addWidget(videoWidget);
     layout->addLayout(bottomLayout);
@@ -119,7 +129,6 @@ VideoPlayerWidget::VideoPlayerWidget(QWidget* parent)
 
     layout->addWidget(positionSlider);
     layout->addWidget(seeDetails);
-
 
     setLayout(layout);
 
@@ -234,4 +243,14 @@ void VideoPlayerWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
         videoInfo.append("videoFrameRate: "+ videoFrameRate  + "\n");
         videoInfo.append("resolution:"+resolution +"\n");
     }
+}
+
+void VideoPlayerWidget::skipForward() {
+    qint64 currentPosition = player->position();
+    player->setPosition(currentPosition + 5000); // Skip forward by 5000 ms (5 seconds)
+}
+
+void VideoPlayerWidget::skipBackward() {
+    qint64 currentPosition = player->position();
+    player->setPosition(currentPosition - 5000); // Skip backward by 5000 ms (5 seconds)
 }
