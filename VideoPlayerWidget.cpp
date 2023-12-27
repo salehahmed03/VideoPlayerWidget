@@ -247,10 +247,10 @@ void VideoPlayerWidget::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
 
 void VideoPlayerWidget::skipForward() {
     qint64 currentPosition = player->position();
-    player->setPosition(currentPosition + 5000); // Skip forward by 5000 ms (5 seconds)
+    player->setPosition(currentPosition + 5000);
 }
 
 void VideoPlayerWidget::skipBackward() {
     qint64 currentPosition = player->position();
-    player->setPosition(currentPosition - 5000); // Skip backward by 5000 ms (5 seconds)
+    player->setPosition(currentPosition - 5000);
 }

@@ -78,7 +78,7 @@ private:
     QMediaPlayer* player;
     QPushButton* seeDetails;
     QString videoInfo;
-
+    bool isExpanded;
 
 
 };
