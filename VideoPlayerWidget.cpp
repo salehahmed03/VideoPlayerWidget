@@ -170,7 +170,6 @@ void VideoPlayerWidget::makeFullscreen() {
     urlField->hide();
     confirmButton->hide();
     seeDetails->hide();
-    QMessageBox::information(nullptr, "Info", "Press Exit Key to Escape Full Screen");
 
 
 }

@@ -137,7 +137,6 @@ void VideoList::listItemDoubleClicked(const QModelIndex& index)
 	string s = videoPlayer.currentVideo->data.getFilePath();
 	QString qString = QString::fromStdString(s);
 	V->setVideoPath(qString);
-	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }
 
 void VideoList::onNextClicked()
@@ -149,7 +148,6 @@ void VideoList::onNextClicked()
 	string s = videoPlayer.currentVideo->data.getFilePath();
 	QString qString = QString::fromStdString(s);
 	V->setVideoPath(qString);
-	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }
 
 void VideoList::onPreviousClicked()
@@ -161,7 +159,6 @@ void VideoList::onPreviousClicked()
 	string s = videoPlayer.currentVideo->data.getFilePath();
 	QString qString = QString::fromStdString(s);
 	V->setVideoPath(qString);
-	QMessageBox::information(nullptr, "Info", "Press Confirm To Play The Video");
 }
 
 void VideoList::onItemClickedForRemove(const QModelIndex& index)
